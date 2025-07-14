@@ -15,7 +15,7 @@ module "eks" {
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
 
-  bucket = "my-s3-bucket"
+  bucket = "my-awesome-private-s3-bucket"
   acl    = "private"
 
   control_object_ownership = true
@@ -27,4 +27,5 @@ module "s3_bucket" {
   tags = {
     Service = S3
     Environment = Dev
+}
 }
