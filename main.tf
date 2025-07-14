@@ -25,7 +25,7 @@ module "s3_bucket" {
     enabled = true
   }
   tags = {
-    Service = S3
-    Environment = Dev
+    Service = "S3"
+    Environment = "Dev"
 }
 }
