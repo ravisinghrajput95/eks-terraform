@@ -24,4 +24,7 @@ module "s3_bucket" {
   versioning = {
     enabled = true
   }
+  tags = {
+    Service = S3
+    Environment = Dev
 }
