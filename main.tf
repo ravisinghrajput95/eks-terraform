@@ -18,47 +18,6 @@ module "s3_bucket" {
   is_directory_bucket = true
   bucket              = "my-awesome-private-s3-bucket"
   availability_zone_id = data.aws_availability_zones.available.zone_ids[1]
-  server_side_encryption_configuration = {
-    rule = {
-      bucket_key_enabled = true # required for directory buckets
-      apply_server_side_encryption_by_default = {
-        kms_master_key_id = aws_kms_key.objects.arn
-        sse_algorithm     = "aws:kms"
-      }
-    }
-  }
-  lifecycle_rule = [
-    {
-      id     = "test"
-      status = "Enabled"
-      expiration = {
-        days = 7
-      }
-    },
-    {
-      id     = "logs"
-      status = "Enabled"
-      expiration = {
-        days = 5
-      }
-      filter = {
-        prefix                = "logs/"
-        object_size_less_than = 10
-      }
-    },
-    {
-      id     = "other"
-      status = "Enabled"
-      expiration = {
-        days = 2
-      }
-      filter = {
-        prefix = "other/"
-      }
-    }
-  ]
-  attach_policy = true
-  policy        = data.aws_iam_policy_document.bucket_policy.json
 
   tags = {
     Service = "S3"
