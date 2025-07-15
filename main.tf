@@ -14,10 +14,7 @@ module "eks" {
 
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
-
-  is_directory_bucket = true
   bucket              = "my-awesome-private-s3-bucket"
-  availability_zone_id = data.aws_availability_zones.available.zone_ids[1]
 
   tags = {
     Service = "S3"
