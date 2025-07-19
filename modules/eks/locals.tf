@@ -3,7 +3,7 @@ locals {
   cluster_version     = "1.32"
   vpc_cidr            = var.vpc_cidr
   azs                 = slice(data.aws_availability_zones.available.names, 0, 3)
-  instance_size       = "t2.medium"
+  instance_size       = "t3.medium"
   authentication_mode = "API_AND_CONFIG_MAP"
   ami_type            = "AL2_x86_64"
   capacity_type       = "ON_DEMAND"

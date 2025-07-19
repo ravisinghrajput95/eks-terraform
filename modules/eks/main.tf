@@ -6,12 +6,18 @@ module "eks" {
   cluster_endpoint_public_access           = true
   enable_cluster_creator_admin_permissions = false
   authentication_mode                      = local.authentication_mode
-
   cluster_addons = {
     kube-proxy = {
       most_recent = true
     }
     coredns = {
+      most_recent = true
+    }
+    aws-ebs-csi-driver = {
+      most_recent = true
+      service_account_role_arn = aws_iam_role.ebs_csi_driver.arn
+    }
+    eks-pod-identity-agent = {
       most_recent = true
     }
     vpc-cni = {
@@ -110,4 +116,34 @@ module "vpc_cni_irsa" {
       namespace_service_accounts = ["kube-system:aws-node"]
     }
   }
+}
+
+resource "aws_iam_role" "ebs_csi_driver" {
+  name               = "AmazonEKS_EBS_CSI_DriverRole"
+  assume_role_policy = data.aws_iam_policy_document.ebs_assume_role.json
+}
+
+resource "aws_iam_role_policy_attachment" "ebs_policy_attach" {
+  role       = aws_iam_role.ebs_csi_driver.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+}
+
+resource "kubernetes_storage_class" "this" {
+  depends_on = [module.eks.cluster_name]
+  metadata {
+    name = var.name
+    annotations = var.make_default ? {
+      "storageclass.kubernetes.io/is-default-class" = "true"
+    } : {}
+  }
+
+  storage_provisioner = "ebs.csi.aws.com"
+
+  parameters = {
+    type   = var.volume_type
+    fsType = var.fs_type
+  }
+
+  reclaim_policy      = var.reclaim_policy
+  volume_binding_mode = var.volume_binding_mode
 }

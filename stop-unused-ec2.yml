@@ -1,0 +1,16 @@
+policies:
+  - name: stop-unused-ec2
+    resource: ec2
+    description: |
+      Stop EC2 instances that are running and have had CPUUtilization < 5%
+      for the past 3 days
+    filters:
+      - "State.Name": "running"
+      - type: metrics
+        name: CPUUtilization
+        days: 3
+        period: 86400
+        value: 5
+        op: less-than
+    actions:
+      - stop

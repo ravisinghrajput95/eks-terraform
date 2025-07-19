@@ -33,3 +33,39 @@ variable "aws_account_id" {
   description = "AWS Account ID"
   type        = string
 }
+
+variable "name" {
+  description = "Name of the StorageClass"
+  type        = string
+  default     = "gp3"
+}
+
+variable "volume_type" {
+  description = "EBS volume type"
+  type        = string
+  default     = "gp3"
+}
+
+variable "fs_type" {
+  description = "Filesystem type"
+  type        = string
+  default     = "ext4"
+}
+
+variable "reclaim_policy" {
+  description = "Reclaim policy"
+  type        = string
+  default     = "Delete"
+}
+
+variable "volume_binding_mode" {
+  description = "Volume binding mode"
+  type        = string
+  default     = "WaitForFirstConsumer"
+}
+
+variable "make_default" {
+  description = "Whether to mark this StorageClass as default"
+  type        = bool
+  default     = true
+}

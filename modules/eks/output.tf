@@ -44,3 +44,8 @@ output "kubeconfig" {
           env: null
     EOF
 }
+
+output "storage_class_name" {
+  description = "The name of the storage class created"
+  value       = kubernetes_storage_class.this.metadata[0].name
+}
