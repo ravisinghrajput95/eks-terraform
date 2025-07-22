@@ -1,2 +1,0 @@
-2025-07-17 22:58:06,337 - custodian.policy - INFO - policy:stop-unused-ec2 resource:ec2 region:us-east-1 count:1 time:4.85
-2025-07-17 22:58:08,163 - custodian.policy - INFO - policy:stop-unused-ec2 action:stop resources:1 execution_time:1.82

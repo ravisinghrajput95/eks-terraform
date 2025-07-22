@@ -1,8 +1,9 @@
 terraform {
+  required_version = ">= 1.3.2"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"
+      version = ">= 5.95.0, < 6.0.0"
     }
   }
 
@@ -20,7 +21,9 @@ provider "aws" {
 }
 
 provider "kubernetes" {
-  config_path    = "~/.kube/config"
+  config_path            = "~/.kube/config"
+  host                   = module.eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+  token                  = data.aws_eks_cluster_auth.cluster.token
+  
 }
-
-

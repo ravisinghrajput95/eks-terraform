@@ -18,5 +18,5 @@ data "aws_iam_policy_document" "ebs_assume_role" {
 }
 
 data "aws_eks_cluster_auth" "eks" {
-  name = module.eks.cluster_name
+  name = local.name
 }

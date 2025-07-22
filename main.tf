@@ -12,12 +12,17 @@ module "eks" {
   aws_account_id     = var.aws_account_id
 }
 
+resource "aws_kms_key" "objects" {
+  description             = "KMS key for S3 bucket objects"
+  deletion_window_in_days = 10
+  enable_key_rotation     = true
+}
+
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
-
-  is_directory_bucket = true
+  version = "3.15.1"
   bucket              = "my-awesome-private-s3-bucket"
-  availability_zone_id = data.aws_availability_zones.available.zone_ids[1]
+  block_public_policy = false
   server_side_encryption_configuration = {
     rule = {
       bucket_key_enabled = true # required for directory buckets
@@ -65,4 +70,3 @@ module "s3_bucket" {
     Environment = "Dev"
   }
 }
-
