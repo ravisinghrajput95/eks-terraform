@@ -60,7 +60,13 @@ module "s3_bucket" {
       filter = {
         prefix = "other/"
       }
-    }
+    },
+
+    {
+      id  = "upload"
+      enabled  = true
+      abort_incomplete_multipart_upload_days = 7
+    } 
   ]
   attach_policy = true
   policy        = data.aws_iam_policy_document.bucket_policy.json
