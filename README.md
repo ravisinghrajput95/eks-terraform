@@ -15,13 +15,35 @@ Provision and manage an Amazon EKS (Elastic Kubernetes Service) cluster using Te
 
 ```bash
 .
-├── main.tf             # Entry point for Terraform configuration
-├── variables.tf        # All input variables
-├── outputs.tf          # Output values after deployment
-├── providers.tf        # Provider configuration (AWS)
-├── modules/eks         # Custom module to provision EKS resources
-├── versions.tf         # Terraform version and provider constraints
-└── README.md           # You're here!
+├── data.tf                   # Root-level data sources
+├── ingress.yaml              # Sample Kubernetes ingress manifest
+├── locals.tf                 # Root-level local variables
+├── main.tf                   # Main Terraform configuration
+├── outputs.tf                # Outputs from the root module
+├── provider.tf               # Provider definitions
+├── terraform.tfvars          # Variable values
+├── variables.tf              # Root-level input variables
+├── stop-unused-ec2.yml       # GitHub Action to stop unused EC2s
+├── modules/                  # Terraform modules
+│   ├── eks/                  # EKS module
+│   │   ├── data.tf
+│   │   ├── locals.tf
+│   │   ├── main.tf
+│   │   ├── output.tf
+│   │   ├── provider.tf
+│   │   └── variables.tf
+│   └── vpc/                  # VPC module
+│       ├── data.tf
+│       ├── locals.tf
+│       ├── main.tf
+│       ├── output.tf
+│       ├── provider.tf
+│       └── variables.tf
+├── .github/
+│   └── workflows/
+│       └── infracost.yml     # Infracost GitHub Action workflow
+└── README.md
+
 ```
 
 ## Getting Started
