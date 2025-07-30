@@ -1,4 +1,4 @@
-#Provision EKS with Terraform, estimate cost with Infracost and governance with Cloud custodian
+# Provision EKS with Terraform, estimate cost with Infracost and governance with Cloud custodian
 
 Provision and manage an Amazon EKS (Elastic Kubernetes Service) cluster using Terraform. This repo helps you automate the deployment of a production-ready Kubernetes environment on AWS.
 
